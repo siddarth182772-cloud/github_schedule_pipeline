@@ -1,0 +1,13 @@
+name: Run Every 5 Minutes
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # runs every 5 minutes
+
+jobs:
+  run-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print message
+        run: echo "This runs every 5 minutes 🚀"
