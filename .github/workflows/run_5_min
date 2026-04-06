@@ -1,13 +1,33 @@
-name: Run Every 5 Minutes
+name: Terraform Auto Run Every 5 Minutes
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # runs every 5 minutes
+    - cron: "*/5 * * * *"   # every 5 minutes
+  workflow_dispatch:        # optional: run manually also
 
 jobs:
-  run-job:
+  terraform:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print message
-        run: echo "This runs every 5 minutes 🚀"
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-west-2   # 🔁 change your region
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
