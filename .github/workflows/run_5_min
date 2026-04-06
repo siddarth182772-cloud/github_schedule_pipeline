@@ -1,4 +1,4 @@
-name: Test Every 5 Minutes
+name: Run Every 5 Minutes
 
 on:
   schedule:
@@ -11,4 +11,4 @@ jobs:
 
     steps:
       - name: Print Hello
-        run: echo "Hello World from GitHub Actions 🚀"
+        run: echo "Hello from GitHub Actions 🚀"
